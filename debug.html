@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Transliteration</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        input, textarea { width: 100%; padding: 10px; margin: 10px 0; font-size: 16px; }
+        .output { background: #f0f0f0; padding: 10px; margin: 10px 0; min-height: 50px; }
+        .hindi { font-size: 20px; color: blue; }
+    </style>
+</head>
+<body>
+    <h1>Debug Transliteration</h1>
+    <input type="text" id="input" placeholder="Type English text here..." />
+    <div class="output">
+        <strong>Output:</strong> <span id="output" class="hindi"></span>
+    </div>
+    <div id="debug"></div>
+
+    <script>
+        // Simple word database
+        const words = {
+            'namaste': 'नमस्ते',
+            'bharat': 'भारत', 
+            'yoga': 'योग',
+            'guru': 'गुरु',
+            'dharma': 'धर्म',
+            'karma': 'कर्म'
+        };
+
+        // Character mappings
+        const chars = {
+            'ka': 'क', 'kha': 'ख', 'ga': 'ग',
+            'cha': 'च', 'ja': 'ज', 'ta': 'त', 
+            'da': 'द', 'na': 'न', 'pa': 'प',
+            'ba': 'ब', 'ma': 'म', 'ya': 'य',
+            'ra': 'र', 'la': 'ल', 'va': 'व',
+            'sa': 'स', 'ha': 'ह',
+            'a': 'अ', 'i': 'इ', 'u': 'उ', 'e': 'ए', 'o': 'ओ'
+        };
+
+        function transliterate(text) {
+            console.log('Input:', text);
+            
+            if (!text) return '';
+            
+            // Check for complete words first
+            const lowerText = text.toLowerCase();
+            if (words[lowerText]) {
+                console.log('Found word match:', words[lowerText]);
+                return words[lowerText];
+            }
+            
+            // Character by character
+            let result = '';
+            let i = 0;
+            
+            while (i < text.length) {
+                let found = false;
+                
+                // Try 3-char, 2-char, 1-char
+                for (let len = 3; len >= 1; len--) {
+                    const substr = text.toLowerCase().substr(i, len);
+                    if (chars[substr]) {
+                        result += chars[substr];
+                        i += len;
+                        found = true;
+                        console.log('Matched:', substr, '→', chars[substr]);
+                        break;
+                    }
+                }
+                
+                if (!found) {
+                    result += text[i];
+                    i++;
+                }
+            }
+            
+            console.log('Final result:', result);
+            return result;
+        }
+
+        const input = document.getElementById('input');
+        const output = document.getElementById('output');
+        const debug = document.getElementById('debug');
+
+        input.addEventListener('input', function() {
+            const result = transliterate(this.value);
+            output.textContent = result;
+            debug.innerHTML = `<pre>Input: "${this.value}"<br>Output: "${result}"</pre>`;
+        });
+
+        // Test on load
+        window.onload = function() {
+            console.log('Page loaded, testing...');
+            input.value = 'namaste';
+            input.dispatchEvent(new Event('input'));
+        };
+    </script>
+</body>
+</html>
