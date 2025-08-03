@@ -24,11 +24,19 @@
                             <i class="fas fa-times"></i>
                         </button>
                     </div>
-                    <textarea 
-                        id="englishInput" 
-                        placeholder="Type English text here... (e.g., 'namaste', 'bharat', 'sanskrit')"
-                        rows="8"
-                    ></textarea>
+                    <div class="input-container">
+                        <textarea 
+                            id="englishInput" 
+                            placeholder="Type English text here... (e.g., 'namaste', 'bharat', 'sanskrit')"
+                            rows="8"
+                        ></textarea>
+                        <div class="suggestions-container" id="suggestionsContainer">
+                            <div class="suggestions-header">
+                                <i class="fas fa-lightbulb"></i> Suggestions
+                            </div>
+                            <div class="suggestions-list" id="suggestionsList"></div>
+                        </div>
+                    </div>
                     <div class="char-count">
                         <span id="inputCount">0</span> characters
                     </div>

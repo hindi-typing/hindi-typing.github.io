@@ -115,6 +115,10 @@ header p {
     transform: scale(1.1);
 }
 
+.input-container {
+    position: relative;
+}
+
 textarea {
     width: 100%;
     border: 2px solid #e9ecef;
@@ -132,6 +136,82 @@ textarea:focus {
     border-color: #667eea;
     box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
     background: white;
+}
+
+.suggestions-container {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 2px solid #667eea;
+    border-top: none;
+    border-radius: 0 0 15px 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    z-index: 1000;
+    max-height: 300px;
+    overflow-y: auto;
+    display: none;
+}
+
+.suggestions-container.show {
+    display: block;
+}
+
+.suggestions-header {
+    background: #667eea;
+    color: white;
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+.suggestions-header i {
+    margin-right: 8px;
+    color: #ffd700;
+}
+
+.suggestions-list {
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+.suggestion-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+    border-bottom: 1px solid #f0f0f0;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.suggestion-item:hover {
+    background: #f8f9fa;
+}
+
+.suggestion-item:last-child {
+    border-bottom: none;
+}
+
+.suggestion-english {
+    font-weight: 500;
+    color: #495057;
+    flex: 1;
+}
+
+.suggestion-arrow {
+    color: #6c757d;
+    margin: 0 10px;
+    font-size: 12px;
+}
+
+.suggestion-hindi {
+    font-family: 'Noto Sans Devanagari', 'Arial Unicode MS', sans-serif;
+    color: #667eea;
+    font-weight: 600;
+    font-size: 16px;
 }
 
 #hindiOutput {
@@ -339,6 +419,25 @@ footer {
     
     .section-header h2 {
         font-size: 1.2rem;
+    }
+    
+    .suggestions-container {
+        max-height: 200px;
+    }
+    
+    .suggestion-item {
+        padding: 10px 15px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+    
+    .suggestion-arrow {
+        display: none;
+    }
+    
+    .suggestion-hindi {
+        font-size: 14px;
     }
 }
 
