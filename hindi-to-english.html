@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hindi to English Transliteration</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            padding: 40px;
+        }
+
+        .transliteration-area {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .input-section, .output-section {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 300px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 15px;
+            font-size: 16px;
+            resize: vertical;
+            outline: none;
+            transition: border-color 0.3s;
+            line-height: 1.6;
+        }
+
+        textarea:focus {
+            border-color: #667eea;
+        }
+
+        #hindiInput {
+            font-family: 'Noto Sans Devanagari', Arial, sans-serif;
+            font-size: 18px;
+        }
+
+        #englishOutput {
+            background: white;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+
+        .examples {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+        }
+
+        .examples h3 {
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .example-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+        }
+
+        .example-item {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .example-item:hover {
+            border-color: #667eea;
+            transform: scale(1.02);
+        }
+
+        .example-hindi {
+            color: #667eea;
+            font-family: 'Noto Sans Devanagari', Arial, sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .example-english {
+            color: #495057;
+            font-weight: 500;
+            font-family: 'Courier New', monospace;
+        }
+
+        .char-count {
+            text-align: right;
+            margin-top: 10px;
+            font-size: 14px;
+            color: #6c757d;
+        }
+
+        @media (max-width: 768px) {
+            .transliteration-area {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .main-content {
+                padding: 20px;
+            }
+            
+            textarea {
+                height: 200px;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🇮🇳 Hindi to English Transliteration</h1>
+            <p>Convert Hindi (Devanagari) text to English (Roman) script</p>
+        </div>
+
+        <div class="main-content">
+            <div class="transliteration-area">
+                <div class="input-section">
+                    <div class="section-title">
+                        🔤 Hindi Input (Devanagari)
+                    </div>
+                    <textarea 
+                        id="hindiInput" 
+                        placeholder="यहाँ हिंदी टेक्स्ट लिखें... (Type Hindi text here...)"
+                    ></textarea>
+                    <div class="char-count">
+                        <span id="inputCount">0</span> characters
+                    </div>
+                </div>
+
+                <div class="output-section">
+                    <div class="section-title">
+                        ⌨️ English Output (Roman)
+                    </div>
+                    <textarea 
+                        id="englishOutput" 
+                        placeholder="English transliteration will appear here..."
+                        readonly
+                    ></textarea>
+                    <div class="char-count">
+                        <span id="outputCount">0</span> characters
+                    </div>
+                </div>
+            </div>
+
+            <div class="controls">
+                <button onclick="clearAll()">🗑️ Clear All</button>
+                <button onclick="copyOutput()">📋 Copy English Text</button>
+                <button onclick="pasteExample()">📝 Paste Test Text</button>
+            </div>
+
+            <div class="examples">
+                <h3>✨ Click to Try Examples</h3>
+                <div class="example-grid">
+                    <div class="example-item" onclick="setExample('नमस्ते')">
+                        <div class="example-hindi">नमस्ते</div>
+                        <div class="example-english">namaste</div>
+                    </div>
+                    <div class="example-item" onclick="setExample('भारत एक महान देश है')">
+                        <div class="example-hindi">भारत एक महान देश है</div>
+                        <div class="example-english">bharat ek mahan desh hai</div>
+                    </div>
+                    <div class="example-item" onclick="setExample('मैं हिंदी सीख रहा हूँ')">
+                        <div class="example-hindi">मैं हिंदी सीख रहा हूँ</div>
+                        <div class="example-english">main hindi seekh raha hun</div>
+                    </div>
+                    <div class="example-item" onclick="setExample('योग और ध्यान करना अच्छा है')">
+                        <div class="example-hindi">योग और ध्यान करना अच्छा है</div>
+                        <div class="example-english">yog aur dhyan karna accha hai</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Comprehensive Devanagari to Roman transliteration mapping
+        const devanagariToRoman = {
+            // Vowels
+            'अ': 'a', 'आ': 'aa', 'इ': 'i', 'ई': 'ee', 'उ': 'u', 'ऊ': 'oo',
+            'ए': 'e', 'ऐ': 'ai', 'ओ': 'o', 'औ': 'au',
+            'ऋ': 'ri', 'ॠ': 'ree',
+            
+            // Consonants
+            'क': 'ka', 'ख': 'kha', 'ग': 'ga', 'घ': 'gha', 'ङ': 'nga',
+            'च': 'cha', 'छ': 'chha', 'ज': 'ja', 'झ': 'jha', 'ञ': 'nya',
+            'ट': 'ta', 'ठ': 'tha', 'ड': 'da', 'ढ': 'dha', 'ण': 'na',
+            'त': 'ta', 'थ': 'tha', 'द': 'da', 'ध': 'dha', 'न': 'na',
+            'प': 'pa', 'फ': 'pha', 'ब': 'ba', 'भ': 'bha', 'म': 'ma',
+            'य': 'ya', 'र': 'ra', 'ल': 'la', 'व': 'va', 'श': 'sha',
+            'ष': 'sha', 'स': 'sa', 'ह': 'ha',
+            
+            // Compound consonants
+            'क्ष': 'ksha', 'त्र': 'tra', 'ज्ञ': 'gya', 'श्र': 'shra',
+            
+            // Consonants with halant (्)
+            'क्': 'k', 'ख्': 'kh', 'ग्': 'g', 'घ्': 'gh', 'ङ्': 'ng',
+            'च्': 'ch', 'छ्': 'chh', 'ज्': 'j', 'झ्': 'jh', 'ञ्': 'ny',
+            'ट्': 't', 'ठ्': 'th', 'ड्': 'd', 'ढ्': 'dh', 'ण्': 'n',
+            'त्': 't', 'थ्': 'th', 'द्': 'd', 'ध्': 'dh', 'न्': 'n',
+            'प्': 'p', 'फ्': 'ph', 'ब्': 'b', 'भ्': 'bh', 'म्': 'm',
+            'य्': 'y', 'र्': 'r', 'ल्': 'l', 'व्': 'v', 'श्': 'sh',
+            'ष्': 'sh', 'स्': 's', 'ह्': 'h',
+            
+            // Vowel matras (diacritics)
+            'ा': 'aa', 'ि': 'i', 'ी': 'ee', 'ु': 'u', 'ू': 'oo',
+            'े': 'e', 'ै': 'ai', 'ो': 'o', 'ौ': 'au',
+            'ृ': 'ri', 'ॄ': 'ree',
+            
+            // Numbers
+            '०': '0', '१': '1', '२': '2', '३': '3', '४': '4',
+            '५': '5', '६': '6', '७': '7', '८': '8', '९': '9',
+            
+            // Punctuation
+            '।': '.', '॥': '||', 'ं': 'n', 'ः': 'h', 'ँ': 'n',
+            '़': '', // nukta - usually ignored in transliteration
+            
+            // Special characters
+            'ॐ': 'om'
+        };
+
+        // DOM elements
+        const hindiInput = document.getElementById('hindiInput');
+        const englishOutput = document.getElementById('englishOutput');
+        const inputCount = document.getElementById('inputCount');
+        const outputCount = document.getElementById('outputCount');
+
+        // Main transliteration function
+        function transliterateHindiToEnglish(hindiText) {
+            if (!hindiText) return '';
+            
+            let result = '';
+            let i = 0;
+            
+            while (i < hindiText.length) {
+                let matched = false;
+                let char = hindiText[i];
+                
+                // Try compound consonants first (longer patterns)
+                for (let len = 3; len >= 1; len--) {
+                    if (i + len <= hindiText.length) {
+                        const substr = hindiText.substr(i, len);
+                        if (devanagariToRoman[substr]) {
+                            result += devanagariToRoman[substr];
+                            i += len;
+                            matched = true;
+                            break;
+                        }
+                    }
+                }
+                
+                // If no Devanagari match, keep the character as is (for English, numbers, punctuation)
+                if (!matched) {
+                    // Handle spaces and common punctuation
+                    if (char === ' ') {
+                        result += ' ';
+                    } else if (/[a-zA-Z0-9.,!?;:()\-"]/.test(char)) {
+                        result += char;
+                    } else {
+                        // Unknown Devanagari character - try to transliterate or skip
+                        result += char;
+                    }
+                    i++;
+                }
+            }
+            
+            // Clean up the result
+            result = result.replace(/\s+/g, ' ').trim();
+            
+            return result;
+        }
+
+        // Event listeners
+        hindiInput.addEventListener('input', function() {
+            const hindiText = this.value;
+            const englishText = transliterateHindiToEnglish(hindiText);
+            
+            englishOutput.value = englishText;
+            
+            // Update character counts
+            inputCount.textContent = hindiText.length;
+            outputCount.textContent = englishText.length;
+        });
+
+        // Utility functions
+        function clearAll() {
+            hindiInput.value = '';
+            englishOutput.value = '';
+            inputCount.textContent = '0';
+            outputCount.textContent = '0';
+            hindiInput.focus();
+        }
+
+        function copyOutput() {
+            const text = englishOutput.value;
+            if (!text) {
+                alert('No text to copy!');
+                return;
+            }
+            
+            navigator.clipboard.writeText(text).then(() => {
+                alert('English text copied to clipboard!');
+            }).catch(() => {
+                // Fallback for older browsers
+                englishOutput.select();
+                document.execCommand('copy');
+                alert('English text copied to clipboard!');
+            });
+        }
+
+        function setExample(hindiText) {
+            hindiInput.value = hindiText;
+            englishOutput.value = transliterateHindiToEnglish(hindiText);
+            inputCount.textContent = hindiText.length;
+            outputCount.textContent = englishOutput.value.length;
+            hindiInput.focus();
+        }
+
+        function pasteExample() {
+            const testText = `बहुत पुरानी बात है एक गांव में शेखर नाम का एक व्यक्ति रहता था। वह बड़ा मेहनती था किंतु गांव में कोई रोजगार नहीं था, उसने सोचा कि मैं शहर चला जाता हूं वहां मुझे मेरी योग्यता अनुसार मेहनत के पैसे मिल जाएंगे। यह सोचकर शेखर एक दिन अपने गांव से शहर की ओर चल दिया।
+
+शहर बहुत दूर था चलते-चलते शेखर थक चुका था। शेखर इतना थक गया था कि अब उससे बिल्कुल भी चला नहीं जा रहा था और वह थककर वहीं बैठ गया। तभी शेखर ने देखा कि वहां से कुछ दूरी पर एक झोपड़ी है और झोपड़ी में एक घोड़ा बंधा हुआ है। शेखर ने सोचा क्यों ना इस घोड़े को किराये पर ले लूं और इसी से शहर चला जाता हूं।
+
+शेखर जैसे-तैसे झोपड़ी पर तक पहुंचा । शेखर ने देखा वहां एक व्यक्ति खड़ा हुआ है शेखर समझ गया कि यह अवश्य ही घोड़े का मालिक है। शेखर उस व्यक्ति से बोला-" मुझे आगे शहर में जाना है और शहर यहां से कई किलोमीटर दूर है, मैं बुरी तरीके से थक चुका हूं तो क्या मैं आपका घोड़ा ले सकता हूं।"
+
+इस पर घोड़े का मलिक झुंझलाते हुए बोला- " तुम्हे क्या मैं घोड़ा ऐसे ही दे दूं।" शेखर बोला- " मैं आपसे घोड़ा फ्री में नहीं लूंगा इसके बदले मैं आपको घोड़े का किराया दूंगा।"
+
+घोड़े का मालिक बोला- " मैं तुम्हें घोड़ा किराए पर तो दे सकता हूं किंतु मुझे अभी दूसरे गांव जाना है, अगर तुम मुझेउस गांव तक छोड़ दो तो मैं यह घोड़ा तुम्हे किराए पर दे सकता हूं। "`;
+            
+            hindiInput.value = testText;
+            englishOutput.value = transliterateHindiToEnglish(testText);
+            inputCount.textContent = testText.length;
+            outputCount.textContent = englishOutput.value.length;
+            hindiInput.focus();
+        }
+
+        // Initialize
+        hindiInput.focus();
+        inputCount.textContent = '0';
+        outputCount.textContent = '0';
+    </script>
+</body>
+</html>
