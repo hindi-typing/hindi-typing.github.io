@@ -3,115 +3,427 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>English to Hindi Transliteration</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>Online Clipboard - Copy Paste Any Text Online</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            margin-top: 30px;
+        }
+        
+        header {
+            background: #4f46e5;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 25px;
+        }
+        
+        .section {
+            margin-bottom: 30px;
+        }
+        
+        .section-title {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: #4f46e5;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-title i {
+            font-size: 1.2rem;
+        }
+        
+        .description {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        textarea {
+            width: 100%;
+            min-height: 200px;
+            padding: 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+            resize: vertical;
+            margin-bottom: 20px;
+            transition: border-color 0.3s;
+        }
+        
+        textarea:focus {
+            outline: none;
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #374151;
+        }
+        
+        input[type="text"] {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+        }
+        
+        button {
+            background: #4f46e5;
+            color: white;
+            border: none;
+            padding: 14px 25px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        button:hover {
+            background: #4338ca;
+            transform: translateY(-2px);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .secondary-btn {
+            background: #9ca3af;
+        }
+        
+        .secondary-btn:hover {
+            background: #6b7280;
+        }
+        
+        .code-display {
+            background: #f3f4f6;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .code-text {
+            font-family: monospace;
+            font-size: 1.2rem;
+            color: #4f46e5;
+            word-break: break-all;
+            margin-bottom: 15px;
+        }
+        
+        .timer {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #ef4444;
+            font-weight: 600;
+        }
+        
+        .divider {
+            height: 1px;
+            background: #e5e7eb;
+            margin: 30px 0;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #6b7280;
+            font-size: 0.9rem;
+            margin-top: 20px;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            background: #10b981;
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transform: translateX(100%);
+            transition: transform 0.3s ease-out;
+            z-index: 1000;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                margin-top: 10px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1><i class="fas fa-language"></i> English to Hindi Transliteration</h1>
-            <p>Convert English text to Hindi (Devanagari) script</p>
+            <h1>Online Clipboard</h1>
+            <p class="subtitle">Copy and paste text between devices - Data expires in 39 minutes</p>
         </header>
-
-        <main>
-            <div class="transliteration-container">
-                <div class="input-section">
-                    <div class="section-header">
-                        <h2><i class="fas fa-keyboard"></i> English Input</h2>
-                        <button class="clear-btn" id="clearInput" title="Clear input">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                    <textarea 
-                        id="englishInput" 
-                        placeholder="Type English text here... (e.g., 'namaste', 'bharat', 'sanskrit')"
-                        rows="8"
-                    ></textarea>
-                    <div class="char-count">
-                        <span id="inputCount">0</span> characters
-                    </div>
-                </div>
-
-                <div class="arrow-container">
-                    <i class="fas fa-arrow-right"></i>
-                </div>
-
-                <div class="output-section">
-                    <div class="section-header">
-                        <h2><i class="fas fa-font"></i> Hindi Output</h2>
-                        <div class="output-controls">
-                            <button class="copy-btn" id="copyOutput" title="Copy to clipboard">
-                                <i class="fas fa-copy"></i>
-                            </button>
-                            <button class="clear-btn" id="clearOutput" title="Clear output">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <textarea 
-                        id="hindiOutput" 
-                        placeholder="Hindi transliteration will appear here..."
-                        rows="8"
-                        readonly
-                    ></textarea>
-                    <div class="char-count">
-                        <span id="outputCount">0</span> characters
-                    </div>
+        
+        <div class="content">
+            <div class="section">
+                <h2 class="section-title"><i class="fas fa-edit"></i> Save Text</h2>
+                <p class="description">Enter the text you want to share. We'll store it securely for 39 minutes and give you a code to retrieve it.</p>
+                
+                <textarea id="textToSave" placeholder="Type or paste your text here..."></textarea>
+                
+                <button id="saveButton">
+                    <i class="fas fa-save"></i> Generate Sharing Code
+                </button>
+                
+                <div id="codeResult" class="code-display">
+                    <p>Your sharing code:</p>
+                    <p id="generatedCode" class="code-text"></p>
+                    <p>Use this code to retrieve your text within:</p>
+                    <p id="expiryTimer" class="timer">39:00</p>
+                    <button class="secondary-btn" id="copyCodeBtn">
+                        <i class="fas fa-copy"></i> Copy Code
+                    </button>
                 </div>
             </div>
-
-            <div class="features">
-                <div class="feature-card">
-                    <i class="fas fa-bolt"></i>
-                    <h3>Real-time Conversion</h3>
-                    <p>Instant transliteration as you type</p>
+            
+            <div class="divider"></div>
+            
+            <div class="section">
+                <h2 class="section-title"><i class="fas fa-download"></i> Retrieve Text</h2>
+                <p class="description">Enter a sharing code to retrieve the text that was saved.</p>
+                
+                <div class="input-group">
+                    <label for="retrieveCode">Sharing Code</label>
+                    <input type="text" id="retrieveCode" placeholder="Enter your code here">
                 </div>
-                <div class="feature-card">
-                    <i class="fas fa-mobile-alt"></i>
-                    <h3>Mobile Friendly</h3>
-                    <p>Works perfectly on all devices</p>
-                </div>
-                <div class="feature-card">
-                    <i class="fas fa-clipboard"></i>
-                    <h3>Easy Copy</h3>
-                    <p>One-click copy to clipboard</p>
-                </div>
-            </div>
-
-            <div class="examples">
-                <h3><i class="fas fa-lightbulb"></i> Examples</h3>
-                <div class="example-grid">
-                    <div class="example-item" data-english="namaste" data-hindi="नमस्ते">
-                        <span class="english">namaste</span>
-                        <i class="fas fa-arrow-right"></i>
-                        <span class="hindi">नमस्ते</span>
-                    </div>
-                    <div class="example-item" data-english="bharat" data-hindi="भारत">
-                        <span class="english">bharat</span>
-                        <i class="fas fa-arrow-right"></i>
-                        <span class="hindi">भारत</span>
-                    </div>
-                    <div class="example-item" data-english="sanskrit" data-hindi="संस्कृत">
-                        <span class="english">sanskrit</span>
-                        <i class="fas fa-arrow-right"></i>
-                        <span class="hindi">संस्कृत</span>
-                    </div>
-                    <div class="example-item" data-english="yoga" data-hindi="योग">
-                        <span class="english">yoga</span>
-                        <i class="fas fa-arrow-right"></i>
-                        <span class="hindi">योग</span>
-                    </div>
+                
+                <button id="retrieveButton">
+                    <i class="fas fa-key"></i> Retrieve Text
+                </button>
+                
+                <div id="retrievedTextContainer" class="code-display">
+                    <p>Retrieved text:</p>
+                    <textarea id="retrievedText" readonly></textarea>
+                    <button class="secondary-btn" id="copyTextBtn">
+                        <i class="fas fa-copy"></i> Copy Text
+                    </button>
                 </div>
             </div>
-        </main>
-
+        </div>
+        
         <footer>
-            <p>&copy; 2024 English to Hindi Transliteration Tool</p>
+            <p>© 2023 Online Clipboard | Your data is automatically deleted after 39 minutes</p>
         </footer>
     </div>
-
-    <script src="script.js"></script>
+    
+    <div id="notification" class="notification"></div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const textToSave = document.getElementById('textToSave');
+            const saveButton = document.getElementById('saveButton');
+            const codeResult = document.getElementById('codeResult');
+            const generatedCode = document.getElementById('generatedCode');
+            const expiryTimer = document.getElementById('expiryTimer');
+            const copyCodeBtn = document.getElementById('copyCodeBtn');
+            const retrieveCode = document.getElementById('retrieveCode');
+            const retrieveButton = document.getElementById('retrieveButton');
+            const retrievedTextContainer = document.getElementById('retrievedTextContainer');
+            const retrievedText = document.getElementById('retrievedText');
+            const copyTextBtn = document.getElementById('copyTextBtn');
+            const notification = document.getElementById('notification');
+            
+            // Generate a random code
+            function generateCode() {
+                return Math.random().toString(36).substring(2, 10) + Math.random().toString(36).substring(2, 10);
+            }
+            
+            // Show notification
+            function showNotification(message, isSuccess = true) {
+                notification.textContent = message;
+                notification.style.background = isSuccess ? '#10b981' : '#ef4444';
+                notification.classList.add('show');
+                
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 3000);
+            }
+            
+            // Save text with expiration
+            saveButton.addEventListener('click', function() {
+                const text = textToSave.value.trim();
+                
+                if (!text) {
+                    showNotification('Please enter some text to save', false);
+                    return;
+                }
+                
+                const code = generateCode();
+                const expiration = Date.now() + 39 * 60 * 1000; // 39 minutes from now
+                
+                // Save to localStorage
+                localStorage.setItem(`clipboard_${code}`, JSON.stringify({
+                    text: text,
+                    expiration: expiration
+                }));
+                
+                // Show the code to the user
+                generatedCode.textContent = code;
+                codeResult.style.display = 'block';
+                
+                // Start the countdown timer
+                startCountdown(expiration);
+                
+                showNotification('Text saved successfully! Your code is ready.');
+            });
+            
+            // Start countdown timer
+            function startCountdown(expirationTime) {
+                const timerInterval = setInterval(function() {
+                    const now = Date.now();
+                    const timeLeft = expirationTime - now;
+                    
+                    if (timeLeft <= 0) {
+                        clearInterval(timerInterval);
+                        expiryTimer.textContent = 'Expired!';
+                        return;
+                    }
+                    
+                    const minutes = Math.floor(timeLeft / 60000);
+                    const seconds = Math.floor((timeLeft % 60000) / 1000);
+                    
+                    expiryTimer.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+                }, 1000);
+            }
+            
+            // Copy code to clipboard
+            copyCodeBtn.addEventListener('click', function() {
+                const code = generatedCode.textContent;
+                navigator.clipboard.writeText(code).then(function() {
+                    showNotification('Code copied to clipboard!');
+                });
+            });
+            
+            // Retrieve text
+            retrieveButton.addEventListener('click', function() {
+                const code = retrieveCode.value.trim();
+                
+                if (!code) {
+                    showNotification('Please enter a code', false);
+                    return;
+                }
+                
+                const item = JSON.parse(localStorage.getItem(`clipboard_${code}`) || 'null');
+                
+                if (!item) {
+                    showNotification('No text found for this code. It may have expired.', false);
+                    return;
+                }
+                
+                if (Date.now() > item.expiration) {
+                    showNotification('This code has expired', false);
+                    localStorage.removeItem(`clipboard_${code}`);
+                    return;
+                }
+                
+                retrievedText.value = item.text;
+                retrievedTextContainer.style.display = 'block';
+                
+                showNotification('Text retrieved successfully!');
+            });
+            
+            // Copy text to clipboard
+            copyTextBtn.addEventListener('click', function() {
+                const text = retrievedText.value;
+                navigator.clipboard.writeText(text).then(function() {
+                    showNotification('Text copied to clipboard!');
+                });
+            });
+            
+            // Clean up expired items on page load
+            function cleanExpiredItems() {
+                const prefix = 'clipboard_';
+                for (let i = 0; i < localStorage.length; i++) {
+                    const key = localStorage.key(i);
+                    if (key && key.startsWith(prefix)) {
+                        const item = JSON.parse(localStorage.getItem(key));
+                        if (item && Date.now() > item.expiration) {
+                            localStorage.removeItem(key);
+                        }
+                    }
+                }
+            }
+            
+            // Run cleanup on load
+            cleanExpiredItems();
+        });
+    </script>
 </body>
 </html>
