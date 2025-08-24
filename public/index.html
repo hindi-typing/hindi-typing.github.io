@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Video Quality Enhancer</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Video Quality Enhancer</h1>
+        <p>Upload a video and enhance it using denoise, sharpen, color, and upscale filters.</p>
+      </header>
+
+      <section class="card">
+        <form id="enhance-form">
+          <div class="field">
+            <label for="video">Video file</label>
+            <input id="video" name="video" type="file" accept="video/*" required />
+          </div>
+
+          <div class="grid">
+            <div class="field">
+              <label for="denoiseLevel">Denoise</label>
+              <select id="denoiseLevel" name="denoiseLevel">
+                <option value="none">None</option>
+                <option value="low">Low</option>
+                <option value="medium" selected>Medium</option>
+                <option value="high">High</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="sharpenLevel">Sharpen</label>
+              <select id="sharpenLevel" name="sharpenLevel">
+                <option value="none" selected>None</option>
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="upscale">Upscale</label>
+              <select id="upscale" name="upscale">
+                <option value="none" selected>None</option>
+                <option value="720p">720p</option>
+                <option value="1080p">1080p</option>
+                <option value="1440p">1440p</option>
+                <option value="4k">4K</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="brightness">Brightness</label>
+              <input id="brightness" name="brightness" type="range" min="-1" max="1" value="0" step="0.05" />
+            </div>
+
+            <div class="field">
+              <label for="contrast">Contrast</label>
+              <input id="contrast" name="contrast" type="range" min="-1" max="1" value="0" step="0.05" />
+            </div>
+
+            <div class="field">
+              <label for="saturation">Saturation</label>
+              <input id="saturation" name="saturation" type="range" min="-1" max="1" value="0" step="0.05" />
+            </div>
+          </div>
+
+          <div class="actions">
+            <button id="submit" type="submit">Enhance Video</button>
+          </div>
+
+          <div id="progress" class="progress" hidden>
+            <div id="progress-bar" class="progress-bar"></div>
+            <div id="progress-text" class="progress-text">Processing...</div>
+          </div>
+
+          <div id="result" class="result" hidden></div>
+        </form>
+      </section>
+
+      <footer>
+        <a href="https://ffmpeg.org" target="_blank" rel="noreferrer">Powered by FFmpeg</a>
+      </footer>
+    </div>
+
+    <script src="/app.js" defer></script>
+  </body>
+  </html>
+
